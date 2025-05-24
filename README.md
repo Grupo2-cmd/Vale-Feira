@@ -28,7 +28,6 @@ Criar uma plataforma digital para facilitar a visibilidade, o cadastro e a negoc
 - Artesãos e costureiras  
 - Pequenos comerciantes e microempreendedores  
 - Compradores regionais e urbanos  
-- Cooperativas, ONGs e empresas de impacto social  
 
 ---
 
