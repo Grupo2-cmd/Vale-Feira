@@ -1,10 +1,10 @@
-# 🌐 Vale Digital
+# 🌐 Vale Feira
 
 Projeto Integrador — Plataforma para inclusão produtiva no Vale do Jequitinhonha, nordeste de Minas Gerais.
 
 ## 🧭 Visão Geral
 
-O **Vale Digital** é uma plataforma web responsiva que conecta pequenos produtores locais do Vale do Jequitinhonha — como agricultores, artesãos e microempreendedores — a compradores, parceiros comerciais e fornecedores. A proposta é promover a inclusão digital e ampliar o acesso desses produtores ao mercado, fortalecendo a economia regional com o uso da tecnologia.
+O **Vale Feira** é uma plataforma web responsiva que conecta pequenos produtores locais do Vale do Jequitinhonha — como agricultores, artesãos e microempreendedores — a compradores, parceiros comerciais e fornecedores. A proposta é promover a inclusão digital e ampliar o acesso desses produtores ao mercado, fortalecendo a economia regional com o uso da tecnologia.
 
 ---
 
