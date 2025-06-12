@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(20, 99, 95);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .faixa-topo {
+            width: 100%;
+            background-color: white;
+            height: 80px; /* Mantém a faixa pequena */
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .faixa-topo img {
+            height: 175px; /* A imagem pode ultrapassar a faixa visualmente */
+            margin-left: 0;
+        }
+
+        .register-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(20, 99, 95);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(15, 80, 76);
+        }
+
+        .erro {
+            color: red;
+            margin-top: 10px;
+        }
+
+        a {
+            color: rgb(20, 99, 95);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="faixa-topo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+    </div>
+
+    <div class="register-box">
+        <h1>Cadastro</h1>
+        <form method="POST">
+            <label for="nomeForm">Nome:</label><br>
+            <input type="text" name="nomeForm" required><br>
+
+            <label for="senhaForm">Senha:</label><br>
+            <input type="password" name="senhaForm" required><br>
+
+            <input type="submit" value="Cadastrar">
+        </form>
+        <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+
+        {% if erro %}
+            <div class="erro">{{ erro }}</div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

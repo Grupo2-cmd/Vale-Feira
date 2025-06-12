@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo {{current_user.nome}}</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: rgb(20, 99, 95);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topo {
+    background-color: white;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 0; /* sem padding esquerdo */
+    box-sizing: border-box;
+}
+
+
+
+
+        .login-link {
+            background-color: black;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link:hover {
+            background-color: gray;
+        }
+
+        .centralizar {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+            padding: 40px 20px;
+            color: black;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 10px;
+        }
+
+
+        .gif {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+   <div class="topo">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="height: 175px; margin-left: -10;">
+    
+    <div style="display: flex; align-items: center;">
+        {% if current_user.is_authenticated %}
+            <span style="margin-right: 10px; font-weight: bold;">Olá, {{ current_user.nome }}!</span>
+            <a href="{{ url_for('logout') }}" class="login-link">Sair</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="login-link">Login</a>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+
+    
+
+    
+
+</body>
+</html>
