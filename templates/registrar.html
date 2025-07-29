@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
+
     <style>
+        /* Estilo geral da página */
         body {
             margin: 0;
             padding: 0;
-            background-color: rgb(20, 99, 95);
+            background-color: rgb(20, 99, 95); /* Cor de fundo */
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -16,33 +18,37 @@
             height: 100vh;
         }
 
+        /* Faixa superior (barra com o logo) */
         .faixa-topo {
             width: 100%;
             background-color: white;
-            height: 80px; /* Mantém a faixa pequena */
+            height: 80px; /* Altura visual da faixa */
             display: flex;
             align-items: center;
             padding-left: 0;
             box-sizing: border-box;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
         }
 
+        /* Logo na faixa */
         .faixa-topo img {
-            height: 175px; /* A imagem pode ultrapassar a faixa visualmente */
+            height: 175px; /* A imagem pode ultrapassar visualmente a faixa */
             margin-left: 0;
         }
 
+        /* Caixa central de cadastro */
         .register-box {
             background-color: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 10px rgba(0,0,0,0.3); /* Sombra ao redor */
             text-align: center;
             margin-top: 40px;
             width: 100%;
             max-width: 400px;
         }
 
+        /* Estilos dos campos de entrada */
         input[type="text"],
         input[type="password"] {
             width: 100%;
@@ -52,6 +58,7 @@
             border-radius: 4px;
         }
 
+        /* Botão de cadastro */
         input[type="submit"] {
             background-color: rgb(20, 99, 95);
             color: white;
@@ -66,11 +73,13 @@
             background-color: rgb(15, 80, 76);
         }
 
+        /* Exibição de erro (se houver) */
         .erro {
             color: red;
             margin-top: 10px;
         }
 
+        /* Links (ex: link para login) */
         a {
             color: rgb(20, 99, 95);
             text-decoration: none;
@@ -83,12 +92,15 @@
 </head>
 <body>
 
+    <!-- Faixa superior com logo -->
     <div class="faixa-topo">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
     </div>
 
+    <!-- Formulário de cadastro -->
     <div class="register-box">
         <h1>Cadastro</h1>
+
         <form method="POST">
             <label for="nomeForm">Nome:</label><br>
             <input type="text" name="nomeForm" required><br>
@@ -98,8 +110,11 @@
 
             <input type="submit" value="Cadastrar">
         </form>
+
+        <!-- Link para login caso o usuário já tenha conta -->
         <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
 
+        <!-- Exibição de mensagens de erro do servidor, se houver -->
         {% if erro %}
             <div class="erro">{{ erro }}</div>
         {% endif %}
