@@ -14,7 +14,7 @@
                         <p class="text-muted">Compartilhe seus produtos com a comunidade</p>
                     </div>
 
-                    <form method="POST" action="{{ url_for('products.adicionar_produtos') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url_for('adicionar_produtos') }}" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome do produto *</label>
                             <div class="input-group">
@@ -79,7 +79,7 @@
                             <button type="submit" class="btn btn-success btn-lg">
                                 <i class="fas fa-plus me-2"></i>Adicionar Produto
                             </button>
-                            <a href="{{ url_for('main.site') }}" class="btn btn-outline-secondary">
+                            <a href="{{ url_for('site') }}" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Voltar
                             </a>
                         </div>

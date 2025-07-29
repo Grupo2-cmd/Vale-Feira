@@ -12,14 +12,14 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend Architecture
 - **Framework**: Flask (Python web framework)
-- **Architecture Pattern**: Application factory pattern with Blueprint-based modular routing
-- **Database**: SQLAlchemy ORM with SQLite as default (configurable via DATABASE_URL environment variable)
+- **Architecture Pattern**: Single-file application structure (app.py) based on provided original code
+- **Database**: SQLAlchemy ORM with PostgreSQL (production) and SQLite (fallback)
 - **Authentication**: Flask-Login for session management with SHA-256 password hashing
-- **File Handling**: Werkzeug for secure file uploads with configurable upload directory
+- **File Handling**: Werkzeug for secure file uploads with validation
 
 ### Frontend Architecture
 - **Template Engine**: Jinja2 (Flask's default)
-- **CSS Framework**: Bootstrap with dark theme support
+- **CSS Framework**: Bootstrap with dark theme (Replit agent theme)
 - **Icons**: Font Awesome
 - **Responsive Design**: Mobile-first approach with Bootstrap grid system
 - **JavaScript**: Vanilla JavaScript for form validation and UI enhancements
@@ -27,8 +27,7 @@ Preferred communication style: Simple, everyday language.
 ### Security Implementation
 - **Password Security**: SHA-256 hashing for password storage
 - **File Upload Security**: Filename sanitization and file type validation
-- **CORS**: Enabled for API access
-- **Proxy Support**: ProxyFix middleware for deployment behind reverse proxies
+- **Session Management**: Environment-based secret key configuration
 
 ## Key Components
 
@@ -37,9 +36,14 @@ Preferred communication style: Simple, everyday language.
 - **Produto (Product)**: Manages product information including name, price, description (incomplete in current version)
 
 ### Routes Structure
-- **auth.py**: Authentication routes (login, registration, password reset)
-- **main.py**: Main application routes (homepage, product listing with filters)
-- **products.py**: Product management routes (add products, manage user products)
+- **app.py**: Main application file containing all routes:
+  - `/`: Homepage with product listing
+  - `/login`: User authentication 
+  - `/registrar`: User registration
+  - `/logout`: User logout
+  - `/adicionar_produtos`: Product creation form
+  - `/excluir_produto/<id>`: Product deletion
+  - `/redefinir_senha`: Password reset functionality
 
 ### Templates
 - **base.html**: Base template with navigation, Bootstrap styling, and responsive layout
