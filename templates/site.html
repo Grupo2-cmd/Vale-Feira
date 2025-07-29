@@ -6,14 +6,11 @@
     <title>Bem-vindo {{current_user.nome}}</title>
 
     <style>
-        /* Estilos gerais da página */
         body {
             margin: 0;
             background-color: rgb(20, 99, 95);
             font-family: Arial, Helvetica, sans-serif;
         }
-
-        /* Barra superior (topo) */
         .topo {
             background-color: white;
             height: 80px;
@@ -24,8 +21,6 @@
             padding: 0 20px 0 0;
             box-sizing: border-box;
         }
-
-        /* Botões de login, logout e adicionar produto */
         .login-link {
             background-color: black;
             color: white;
@@ -35,12 +30,9 @@
             font-weight: bold;
             margin-left: 10px;
         }
-
         .login-link:hover {
             background-color: gray;
         }
-
-        /* Container centralizado (não usado nesse arquivo, mas mantido para possível uso futuro) */
         .centralizar {
             max-width: 800px;
             margin: 40px auto;
@@ -50,24 +42,18 @@
             font-family: 'Times New Roman', Times, serif;
             border-radius: 10px;
         }
-
-        /* Imagem GIF (não utilizada aqui) */
         .gif {
             width: 100%;
             max-width: 100%;
             height: auto;
             border-radius: 12px;
         }
-
-        /* Container dos produtos em grid */
         .produtos {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
         }
-
-        /* Estilo de cada cartão de produto */
         .produto {
             background-color: white;
             border-radius: 8px;
@@ -77,8 +63,6 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             position: relative;
         }
-
-        /* Botão para excluir produto */
         .btn-excluir {
             background-color: #c00;
             color: white;
@@ -89,7 +73,6 @@
             margin-top: 10px;
             font-weight: bold;
         }
-
         .btn-excluir:hover {
             background-color: #a00;
         }
@@ -105,13 +88,11 @@
     <!-- Botões de ação baseados na autenticação do usuário -->
     <div style="display: flex; align-items: center;">
         {% if current_user.is_authenticated %}
-            <!-- Saudação + botões para adicionar produto e logout -->
             <span style="margin-right: 10px; font-weight: bold;">Olá, {{ current_user.nome }}!</span>
-            <a href="{{ url_for('adicionar_produtos') }}" class="login-link">+ Produto</a>
-            <a href="{{ url_for('logout') }}" class="login-link">Sair</a>
+            <a href="{{ url_for('produto_routes.adicionar_produtos') }}" class="login-link">+ Produto</a>
+            <a href="{{ url_for('auth_routes.logout') }}" class="login-link">Sair</a>
         {% else %}
-            <!-- Se o usuário não estiver logado, mostra o botão de login -->
-            <a href="{{ url_for('login') }}" class="login-link">Login</a>
+            <a href="{{ url_for('auth_routes.login') }}" class="login-link">Login</a>
         {% endif %}
     </div>
 </div>
@@ -120,17 +101,13 @@
 <div class="produtos">
     {% for produto in produtos %}
         <div class="produto">
-            <!-- Imagem do produto -->
             <img src="{{ url_for('static', filename=produto.imagem) }}" width="150" alt="{{ produto.nome }}">
-            
-            <!-- Informações do produto -->
             <h3>{{ produto.nome }}</h3>
             <p>{{ produto.descricao }}</p>
             <strong>R$ {{ '%.2f'|format(produto.preco) }}</strong>
 
-            <!-- Botão de exclusão visível apenas para usuários logados -->
             {% if current_user.is_authenticated %}
-            <form action="{{ url_for('excluir_produto', id=produto.id) }}" method="post">
+            <form action="{{ url_for('produto_routes.excluir_produto', id=produto.id) }}" method="post">
                 <button type="submit" class="btn-excluir">Excluir</button>
             </form>
             {% endif %}

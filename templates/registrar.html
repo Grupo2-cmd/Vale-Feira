@@ -112,7 +112,8 @@
         </form>
 
         <!-- Link para login caso o usuário já tenha conta -->
-        <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+<!-- Link para login caso o usuário já tenha conta -->
+<p>Já tem conta? <a href="{{ url_for('auth_routes.login') }}">Entrar</a></p>
 
         <!-- Exibição de mensagens de erro do servidor, se houver -->
         {% if erro %}

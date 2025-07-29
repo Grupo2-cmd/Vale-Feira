@@ -5,7 +5,6 @@
     <title>Login</title>
 
     <style>
-        /* Estilo do corpo da página */
         body {
             margin: 0;
             padding: 0;
@@ -17,7 +16,6 @@
             height: 100vh;
         }
 
-        /* Faixa branca no topo com logo */
         .faixa-topo {
             width: 100%;
             background-color: white;
@@ -30,11 +28,10 @@
         }
 
         .faixa-topo img {
-            height: 175px; /* A imagem ultrapassa a altura da faixa propositalmente */
+            height: 175px;
             margin-left: 0;
         }
 
-        /* Caixa de login */
         .login-box {
             background-color: white;
             padding: 30px;
@@ -46,7 +43,6 @@
             max-width: 400px;
         }
 
-        /* Campos de texto e senha */
         input[type="text"],
         input[type="password"] {
             width: 100%;
@@ -56,7 +52,6 @@
             border-radius: 4px;
         }
 
-        /* Botão de login */
         input[type="submit"] {
             background-color: rgb(20, 99, 95);
             color: white;
@@ -71,7 +66,6 @@
             background-color: rgb(15, 80, 76);
         }
 
-        /* Estilo dos links */
         a {
             color: rgb(20, 99, 95);
             text-decoration: none;
@@ -104,11 +98,11 @@
 
         <!-- Link para redefinir senha -->
         <p>
-            <a href="{{ url_for('redefinir_senha') }}">Esqueci minha senha</a>
+            <a href="{{ url_for('auth_routes.redefinir_senha') }}">Esqueci minha senha</a>
         </p>
 
         <!-- Link para registrar nova conta -->
-        <p>Não tem conta? <a href="{{ url_for('registrar') }}">Registrar</a></p>
+        <p>Não tem conta? <a href="{{ url_for('auth_routes.registrar') }}">Registrar</a></p>
     </div>
 
 </body>
