@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar - Vale Feira{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow mt-4">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                        <h2 class="card-title">Criar Conta</h2>
+                        <p class="text-muted">Junte-se ao Vale Feira</p>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('auth.registrar') }}">
+                        <div class="mb-3">
+                            <label for="nomeForm" class="form-label">Nome de usuário *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="nomeForm" name="nomeForm" 
+                                       required placeholder="Escolha um nome de usuário" minlength="3">
+                            </div>
+                            <div class="form-text">Mínimo 3 caracteres</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="emailForm" class="form-label">E-mail (opcional)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="emailForm" name="emailForm" 
+                                       placeholder="seu@email.com">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="senhaForm" class="form-label">Senha *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="senhaForm" name="senhaForm" 
+                                       required placeholder="Crie uma senha segura" minlength="6">
+                            </div>
+                            <div class="form-text">Mínimo 6 caracteres</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="confirmaSenhaForm" class="form-label">Confirmar senha *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="confirmaSenhaForm" name="confirmaSenhaForm" 
+                                       required placeholder="Confirme sua senha" minlength="6">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 mb-3">
+                            <i class="fas fa-user-plus me-2"></i>Criar Conta
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="text-muted">
+                            Já tem conta? 
+                            <a href="{{ url_for('auth.login') }}" class="text-decoration-none">
+                                Entre aqui
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const senha = document.getElementById('senhaForm');
+    const confirmaSenha = document.getElementById('confirmaSenhaForm');
+    
+    function validatePasswords() {
+        if (senha.value !== confirmaSenha.value) {
+            confirmaSenha.setCustomValidity('Senhas não conferem');
+        } else {
+            confirmaSenha.setCustomValidity('');
+        }
+    }
+    
+    senha.addEventListener('input', validatePasswords);
+    confirmaSenha.addEventListener('input', validatePasswords);
+});
+</script>
+{% endblock %}
