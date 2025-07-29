@@ -42,7 +42,7 @@ def load_user(user_id):
 app.register_blueprint(main_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(produto_bp)
-app.register_blueprint(chat_bp)
+app.register_blueprint(chat_bp, url_prefix='/chat')
 
 # Criar tabelas do banco de dados
 with app.app_context():
