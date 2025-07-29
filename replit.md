@@ -122,5 +122,23 @@ Preferred communication style: Simple, everyday language.
 - Password hashing with SHA-256
 - Input validation and sanitization
 - CSRF protection through Flask's built-in mechanisms
+- **Chat message encryption** using Fernet cryptography for secure communication
+
+## Recent Changes
+
+### Chat System Implementation (July 29, 2025)
+- Added complete encrypted chat system for user communication about products
+- Implemented cryptography-based message encryption using Fernet
+- Created modular chat architecture:
+  - `models/chat.py` - Chat model with automatic encryption/decryption
+  - `routes/chat.py` - Chat routes and conversation management  
+  - `forms/chat.py` - Chat message forms with validation
+  - `utils/crypto.py` - Encryption utilities for secure messaging
+- Added chat templates:
+  - `chat.html` - Individual chat conversation interface
+  - `meus_chats.html` - Chat overview and conversation list
+- Integrated chat buttons in product listings
+- Added "Meus Chats" navigation link
+- Updated product cards to show chat options instead of WhatsApp integration
 
 The application follows Flask best practices with a modular structure that supports scalability and maintainability. The Blueprint-based routing system allows for easy feature expansion, while the SQLAlchemy ORM provides flexibility for different database backends in production environments.

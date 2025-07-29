@@ -78,10 +78,29 @@
                             <i class="fas fa-box me-1"></i>Produto disponível
                         </div>
                         
-                        <a href="#" class="btn btn-success w-100" 
-                           onclick="contactSeller('{{ produto.nome }}', '{{ produto.preco_formatado }}')">
-                            <i class="fas fa-whatsapp me-2"></i>Entrar em Contato
-                        </a>
+                        {% if current_user.is_authenticated %}
+                            {% if current_user.id != produto.usuario_id %}
+                            <a href="{{ url_for('chat.chat', produto_id=produto.id, outro_usuario_id=produto.usuario_id) }}" 
+                               class="btn btn-primary w-100">
+                                <i class="fas fa-comments me-2"></i>Conversar com Vendedor
+                            </a>
+                            {% else %}
+                            <div class="d-flex gap-2">
+                                <span class="btn btn-outline-secondary flex-grow-1" disabled>
+                                    <i class="fas fa-user me-1"></i>Seu Produto
+                                </span>
+                                <a href="{{ url_for('produto.excluir_produto', id=produto.id) }}" 
+                                   class="btn btn-danger"
+                                   onclick="return confirm('Tem certeza que deseja excluir este produto?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-primary w-100">
+                                <i class="fas fa-sign-in-alt me-2"></i>Entrar para Conversar
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
