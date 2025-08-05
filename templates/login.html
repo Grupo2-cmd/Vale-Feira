@@ -1,59 +1,105 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
 
-{% block title %}Entrar - Vale Feira{% endblock %}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(20, 99, 95);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-{% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card shadow mt-5">
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-sign-in-alt fa-3x text-primary mb-3"></i>
-                        <h2 class="card-title">Entrar</h2>
-                        <p class="text-muted">Acesse sua conta no Vale Feira</p>
-                    </div>
+        .faixa-topo {
+            width: 100%;
+            background-color: white;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-                    <form method="POST" action="{{ url_for('auth.login') }}">
-                        <div class="mb-3">
-                            <label for="nomeForm" class="form-label">Nome de usuário</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" id="nomeForm" name="nomeForm" 
-                                       required placeholder="Seu nome de usuário">
-                            </div>
-                        </div>
+        .faixa-topo img {
+            height: 175px;
+        }
 
-                        <div class="mb-4">
-                            <label for="senhaForm" class="form-label">Senha</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="senhaForm" name="senhaForm" 
-                                       required placeholder="Sua senha">
-                            </div>
-                        </div>
+        .login-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            margin-top: 40px;
+            width: 90%;
+            max-width: 400px;
+        }
 
-                        <button type="submit" class="btn btn-primary w-100 mb-3">
-                            <i class="fas fa-sign-in-alt me-2"></i>Entrar
-                        </button>
-                    </form>
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-                    <div class="text-center">
-                        <p class="mb-2">
-                            <a href="{{ url_for('auth.redefinir_senha') }}" class="text-decoration-none">
-                                Esqueceu sua senha?
-                            </a>
-                        </p>
-                        <p class="text-muted">
-                            Não tem conta? 
-                            <a href="{{ url_for('auth.registrar') }}" class="text-decoration-none">
-                                Registre-se aqui
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        input[type="submit"] {
+            background-color: rgb(20, 99, 95);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(15, 80, 76);
+        }
+
+        a {
+            color: rgb(20, 99, 95);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <div class="faixa-topo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
     </div>
-</div>
-{% endblock %}
+
+    <!-- Formulário de login -->
+    <main class="login-box">
+        <h1>Entrar</h1>
+        <form method="POST">
+            {{ form.csrf_token }}
+            
+            <label for="nomeForm">Usuário:</label><br>
+            <input type="text" name="nomeForm" required><br>
+
+            <label for="senhaForm">Senha:</label><br>
+            <input type="password" name="senhaForm" required><br>
+
+            <input type="submit" value="Entrar">
+        </form>
+
+        <p><a href="{{ url_for('auth.redefinir_senha') }}">Esqueci minha senha</a></p>
+        <p>Não tem conta? <a href="{{ url_for('auth.registrar') }}">Registrar</a></p>
+    </main>
+
+</body>
+</html>

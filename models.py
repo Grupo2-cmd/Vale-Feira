@@ -1,20 +1,26 @@
 from database import db
 from flask_login import UserMixin
+import hashlib
+
+from database import db
+from flask_login import UserMixin
+import hashlib
 
 class Usuario(UserMixin, db.Model):
     """Model for user authentication and management"""
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80), unique=True, nullable=False)
-    senha = db.Column(db.String(256), nullable=False)  # SHA-256 hash
-    
+    senha_hash = db.Column(db.String(256), nullable=False)  # SHA-256 hash
+
     def __init__(self, nome, senha):
         self.nome = nome
-        self.senha = senha
-    
+        # gera e salva o hash da senha diretamente no campo da tabela
+        self.senha_hash = hashlib.sha256(senha.encode()).hexdigest()
+
     def get_id(self):
         """Required by Flask-Login"""
         return str(self.id)
-    
+
     def __repr__(self):
         return f'<Usuario {self.nome}>'
 

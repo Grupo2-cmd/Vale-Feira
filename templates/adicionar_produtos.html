@@ -1,134 +1,85 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Produto</title>
 
-{% block title %}Adicionar Produto - Vale Feira{% endblock %}
+    <style>
+        /* Estilo geral do corpo da página */
+        body {
+            background-color: rgb(20, 99, 95);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-{% block content %}
-<div class="container my-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow">
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-plus-circle fa-3x text-success mb-3"></i>
-                        <h2 class="card-title">Adicionar Produto</h2>
-                        <p class="text-muted">Compartilhe seus produtos com a comunidade</p>
-                    </div>
+        /* Caixa do formulário */
+        .form-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            width: 350px;
+        }
 
-                    <form method="POST" action="{{ url_for('produto.adicionar_produtos') }}" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="nome" class="form-label">Nome do produto *</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                                <input type="text" class="form-control" id="nome" name="nome" 
-                                       required placeholder="Ex: Queijo artesanal, Artesanato em madeira...">
-                            </div>
-                        </div>
+        /* Estilo dos inputs, textarea e labels */
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="preco" class="form-label">Preço (R$) *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">R$</span>
-                                    <input type="number" class="form-control" id="preco" name="preco" 
-                                           required step="0.01" min="0.01" placeholder="0,00">
-                                </div>
-                            </div>
+        input, textarea {
+            width: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
 
-                            <div class="col-md-6 mb-3">
-                                <label for="categoria" class="form-label">Categoria</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-list"></i></span>
-                                    <select class="form-select" id="categoria" name="categoria">
-                                        <option value="">Selecione uma categoria</option>
-                                        <option value="Alimentos">Alimentos</option>
-                                        <option value="Artesanato">Artesanato</option>
-                                        <option value="Roupas">Roupas e Acessórios</option>
-                                        <option value="Decoração">Decoração</option>
-                                        <option value="Beleza">Beleza e Cosméticos</option>
-                                        <option value="Outros">Outros</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+        /* Estilo do botão */
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
 
-                        <div class="mb-3">
-                            <label for="cidade" class="form-label">Cidade</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                                <input type="text" class="form-control" id="cidade" name="cidade" 
-                                       placeholder="Ex: Diamantina, Araçuaí, Turmalina...">
-                            </div>
-                        </div>
+        button:hover {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
 
-                        <div class="mb-3">
-                            <label for="descricao" class="form-label">Descrição</label>
-                            <textarea class="form-control" id="descricao" name="descricao" rows="4" 
-                                      placeholder="Descreva seu produto: ingredientes, materiais, forma de produção, etc."></textarea>
-                        </div>
+    <div class="form-box">
+        <h2>Adicionar Produto</h2>
 
-                        <div class="mb-4">
-                            <label for="imagem" class="form-label">Imagem do produto</label>
-                            <input type="file" class="form-control" id="imagem" name="imagem" 
-                                   accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
-                            <div class="form-text">
-                                Formatos aceitos: PNG, JPG, JPEG, GIF, WEBP. Tamanho máximo: 16MB
-                            </div>
-                        </div>
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('produto.adicionar_produtos') }}">
+            {{ form.hidden_tag() }}
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-success btn-lg">
-                                <i class="fas fa-plus me-2"></i>Adicionar Produto
-                            </button>
-                            <a href="{{ url_for('site') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>Voltar
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+            <label for="nomeForm">{{ form.nomeForm.label.text }}</label>
+            {{ form.nomeForm(size=32) }}
+
+            <label for="precoForm">{{ form.precoForm.label.text }}</label>
+            {{ form.precoForm() }}
+
+            <label for="descricaoForm">{{ form.descricaoForm.label.text }}</label>
+            {{ form.descricaoForm(rows=4) }}
+
+            <label for="imagem">{{ form.imagem.label.text }}</label>
+            {{ form.imagem() }}
+
+            {{ form.submit(class_="submit-button") }}
+        </form>
     </div>
-</div>
-{% endblock %}
 
-{% block extra_scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const precoInput = document.getElementById('preco');
-    const imagemInput = document.getElementById('imagem');
-    
-    // Format price input
-    precoInput.addEventListener('input', function() {
-        let value = this.value;
-        if (value) {
-            this.value = parseFloat(value).toFixed(2);
-        }
-    });
-    
-    // Preview image
-    imagemInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            // Remove previous preview
-            const existingPreview = document.getElementById('imagePreview');
-            if (existingPreview) {
-                existingPreview.remove();
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.createElement('div');
-                preview.id = 'imagePreview';
-                preview.className = 'mt-2';
-                preview.innerHTML = `
-                    <img src="${e.target.result}" class="img-thumbnail" 
-                         style="max-width: 200px; max-height: 200px;" alt="Preview">
-                `;
-                imagemInput.parentNode.appendChild(preview);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-});
-</script>
-{% endblock %}
+</body>
+</html>

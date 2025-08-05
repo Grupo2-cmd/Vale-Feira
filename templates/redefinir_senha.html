@@ -1,84 +1,67 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Redefinir Senha</title>
 
-{% block title %}Redefinir Senha - Vale Feira{% endblock %}
-
-{% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card shadow mt-5">
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-key fa-3x text-warning mb-3"></i>
-                        <h2 class="card-title">Redefinir Senha</h2>
-                        <p class="text-muted">Crie uma nova senha para sua conta</p>
-                    </div>
-
-                    <form method="POST" action="{{ url_for('redefinir_senha') }}">
-                        <div class="mb-3">
-                            <label for="nome" class="form-label">Nome de usuário</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" id="nome" name="nome" 
-                                       required placeholder="Seu nome de usuário">
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nova_senha" class="form-label">Nova senha</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="nova_senha" name="nova_senha" 
-                                       required placeholder="Nova senha" minlength="6">
-                            </div>
-                            <div class="form-text">Mínimo 6 caracteres</div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="confirma_senha" class="form-label">Confirmar nova senha</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="confirma_senha" name="confirma_senha" 
-                                       required placeholder="Confirme a nova senha" minlength="6">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-warning w-100 mb-3">
-                            <i class="fas fa-key me-2"></i>Redefinir Senha
-                        </button>
-                    </form>
-
-                    <div class="text-center">
-                        <p class="text-muted">
-                            Lembrou da senha? 
-                            <a href="{{ url_for('login') }}" class="text-decoration-none">
-                                Entre aqui
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const novaSenha = document.getElementById('nova_senha');
-    const confirmaSenha = document.getElementById('confirma_senha');
-    
-    function validatePasswords() {
-        if (novaSenha.value !== confirmaSenha.value) {
-            confirmaSenha.setCustomValidity('Senhas não conferem');
-        } else {
-            confirmaSenha.setCustomValidity('');
+    <style>
+        body {
+            background-color: rgb(20, 99, 95);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
-    }
-    
-    novaSenha.addEventListener('input', validatePasswords);
-    confirmaSenha.addEventListener('input', validatePasswords);
-});
-</script>
-{% endblock %}
+
+        .form-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            width: 350px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-box">
+        <h2>Redefinir Senha</h2>
+
+      <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.nomeForm.label }} {{ form.nomeForm() }}
+    {{ form.novaSenhaForm.label }} {{ form.novaSenhaForm() }}
+    {{ form.confirmaSenhaForm.label }} {{ form.confirmaSenhaForm() }}
+    {{ form.submit() }}
+</form>
+
+
+    </div>
+
+</body>
+</html>

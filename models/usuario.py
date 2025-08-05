@@ -1,6 +1,7 @@
 from database import db
 from flask_login import UserMixin
 from datetime import datetime
+import hashlib
 
 class Usuario(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

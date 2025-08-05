@@ -1,94 +1,143 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro</title>
 
-{% block title %}Registrar - Vale Feira{% endblock %}
-
-{% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card shadow mt-4">
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
-                        <h2 class="card-title">Criar Conta</h2>
-                        <p class="text-muted">Junte-se ao Vale Feira</p>
-                    </div>
-
-                    <form method="POST" action="{{ url_for('auth.registrar') }}">
-                        <div class="mb-3">
-                            <label for="nomeForm" class="form-label">Nome de usuário *</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" id="nomeForm" name="nomeForm" 
-                                       required placeholder="Escolha um nome de usuário" minlength="3">
-                            </div>
-                            <div class="form-text">Mínimo 3 caracteres</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="emailForm" class="form-label">E-mail (opcional)</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="emailForm" name="emailForm" 
-                                       placeholder="seu@email.com">
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="senhaForm" class="form-label">Senha *</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="senhaForm" name="senhaForm" 
-                                       required placeholder="Crie uma senha segura" minlength="6">
-                            </div>
-                            <div class="form-text">Mínimo 6 caracteres</div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="confirmaSenhaForm" class="form-label">Confirmar senha *</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="confirmaSenhaForm" name="confirmaSenhaForm" 
-                                       required placeholder="Confirme sua senha" minlength="6">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-success w-100 mb-3">
-                            <i class="fas fa-user-plus me-2"></i>Criar Conta
-                        </button>
-                    </form>
-
-                    <div class="text-center">
-                        <p class="text-muted">
-                            Já tem conta? 
-                            <a href="{{ url_for('login') }}" class="text-decoration-none">
-                                Entre aqui
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const senha = document.getElementById('senhaForm');
-    const confirmaSenha = document.getElementById('confirmaSenhaForm');
-    
-    function validatePasswords() {
-        if (senha.value !== confirmaSenha.value) {
-            confirmaSenha.setCustomValidity('Senhas não conferem');
-        } else {
-            confirmaSenha.setCustomValidity('');
+    <style>
+        /* Estilo geral da página */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(20, 99, 95);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
         }
-    }
-    
-    senha.addEventListener('input', validatePasswords);
-    confirmaSenha.addEventListener('input', validatePasswords);
-});
-</script>
-{% endblock %}
+
+        /* Faixa superior (barra com o logo) */
+        .faixa-topo {
+            width: 100%;
+            background-color: white;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Logo na faixa */
+        .faixa-topo img {
+            height: 175px;
+            margin-left: 0;
+        }
+
+        /* Caixa central de cadastro */
+        .register-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Estilos dos campos de entrada */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Botão de cadastro */
+        input[type="submit"] {
+            background-color: rgb(20, 99, 95);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(15, 80, 76);
+        }
+
+        /* Estilo das mensagens flash */
+        ul.messages {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        ul.messages li {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+        ul.messages li.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        ul.messages li.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Faixa superior com logo -->
+    <div class="faixa-topo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" />
+    </div>
+
+    <!-- Formulário de cadastro -->
+    <div class="register-box">
+        <h1>Cadastro</h1>
+
+       <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <label for="nomeForm">Nome:</label><br />
+    {{ form.nomeForm(size=32) }}<br />
+
+    <label for="senhaForm">Senha:</label><br />
+    {{ form.senhaForm() }}<br />
+
+    <label for="confirmaSenhaForm">Confirme a senha:</label><br />
+    {{ form.confirmaSenhaForm() }}<br />
+
+    <label for="emailForm">Email (opcional):</label><br />
+    {{ form.emailForm(size=32) }}<br />
+
+    {{ form.submit() }}
+</form>
+
+
+        <!-- Link para login caso o usuário já tenha conta -->
+        <p>Já tem conta? <a href="{{ url_for('auth.login') }}">Entrar</a></p>
+
+        <!-- Exibição das mensagens flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+</html>

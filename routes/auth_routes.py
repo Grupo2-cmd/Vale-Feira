@@ -4,24 +4,21 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from models.usuario import Usuario
 from database import db
 import hashlib
+from .forms import LoginForm
+from .forms import RegistrarForm
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        nome = request.form.get('nomeForm')
-        senha = request.form.get('senhaForm')
-        
-        if not nome or not senha:
-            flash('Nome de usuário e senha são obrigatórios.', 'error')
-            return render_template('login.html')
-        
-        # Buscar usuário no banco
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        nome = form.nomeForm.data
+        senha = form.senhaForm.data
+
         usuario = Usuario.query.filter_by(nome=nome).first()
-        
         if usuario:
-            # Verificar senha usando SHA-256
             senha_hash = hashlib.sha256(senha.encode()).hexdigest()
             if usuario.senha_hash == senha_hash:
                 login_user(usuario)
@@ -32,46 +29,28 @@ def login():
         else:
             flash('Usuário não encontrado.', 'error')
     
-    return render_template('login.html')
+    return render_template('login.html', form=form)
+
 
 @auth_bp.route('/registrar', methods=['GET', 'POST'])
 def registrar():
-    if request.method == 'POST':
-        nome = request.form.get('nomeForm')
-        senha = request.form.get('senhaForm')
-        confirma_senha = request.form.get('confirmaSenhaForm')
-        email = request.form.get('emailForm')
-        
-        # Validações
-        if not nome or not senha:
-            flash('Nome de usuário e senha são obrigatórios.', 'error')
-            return render_template('registrar.html')
-        
-        if len(nome) < 3:
-            flash('Nome de usuário deve ter pelo menos 3 caracteres.', 'error')
-            return render_template('registrar.html')
-        
-        if len(senha) < 6:
-            flash('Senha deve ter pelo menos 6 caracteres.', 'error')
-            return render_template('registrar.html')
-        
-        if senha != confirma_senha:
-            flash('Senhas não conferem.', 'error')
-            return render_template('registrar.html')
-        
+    form = RegistrarForm()
+
+    if form.validate_on_submit():
+        nome = form.nomeForm.data
+        senha = form.senhaForm.data
+        confirma_senha = form.confirmaSenhaForm.data
+        email = form.emailForm.data
+
         # Verificar se usuário já existe
         if Usuario.query.filter_by(nome=nome).first():
             flash('Nome de usuário já existe.', 'error')
-            return render_template('registrar.html')
-        
-        # Criar novo usuário
+            return render_template('registrar.html', form=form)
+
+        # Criar usuário e salvar no banco
         senha_hash = hashlib.sha256(senha.encode()).hexdigest()
-        novo_usuario = Usuario(
-            nome=nome,
-            senha_hash=senha_hash,
-            email=email if email else None
-        )
-        
+        novo_usuario = Usuario(nome=nome, senha_hash=senha_hash, email=email or None)
+
         try:
             db.session.add(novo_usuario)
             db.session.commit()
@@ -80,8 +59,10 @@ def registrar():
         except Exception as e:
             db.session.rollback()
             flash('Erro ao criar conta. Tente novamente.', 'error')
-    
-    return render_template('registrar.html')
+
+    # GET ou formulário inválido cai aqui:
+    return render_template('registrar.html', form=form)
+
 
 @auth_bp.route('/logout')
 @login_required
@@ -90,39 +71,28 @@ def logout():
     flash('Você saiu com sucesso.', 'info')
     return redirect(url_for('main.home'))
 
+from .forms import RedefinirSenhaForm
+
 @auth_bp.route('/redefinir_senha', methods=['GET', 'POST'])
 def redefinir_senha():
-    if request.method == 'POST':
-        nome = request.form.get('nomeForm')
-        nova_senha = request.form.get('novaSenhaForm')
-        confirma_senha = request.form.get('confirmaSenhaForm')
-        
-        if not nome or not nova_senha or not confirma_senha:
-            flash('Todos os campos são obrigatórios.', 'error')
-            return render_template('redefinir_senha.html')
-        
-        if nova_senha != confirma_senha:
-            flash('Senhas não conferem.', 'error')
-            return render_template('redefinir_senha.html')
-        
-        if len(nova_senha) < 6:
-            flash('Nova senha deve ter pelo menos 6 caracteres.', 'error')
-            return render_template('redefinir_senha.html')
-        
+    form = RedefinirSenhaForm()
+    if form.validate_on_submit():
+        nome = form.nomeForm.data
+        nova_senha = form.novaSenhaForm.data
+        # A confirmação já é validada pelo EqualTo
+
         usuario = Usuario.query.filter_by(nome=nome).first()
         if not usuario:
             flash('Usuário não encontrado.', 'error')
-            return render_template('redefinir_senha.html')
+            return render_template('redefinir_senha.html', form=form)
         
-        # Atualizar senha
         usuario.senha_hash = hashlib.sha256(nova_senha.encode()).hexdigest()
-        
         try:
             db.session.commit()
             flash('Senha redefinida com sucesso! Você pode fazer login agora.', 'success')
             return redirect(url_for('auth.login'))
-        except Exception as e:
+        except Exception:
             db.session.rollback()
             flash('Erro ao redefinir senha. Tente novamente.', 'error')
-    
-    return render_template('redefinir_senha.html')
+
+    return render_template('redefinir_senha.html', form=form)
