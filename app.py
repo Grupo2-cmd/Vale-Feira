@@ -7,12 +7,19 @@ from models import Usuario, Produto, Chat
 from routes import auth_bp, produto_bp, main_bp, chat_bp
 from routes.perfil import perfil_bp
 from flask_wtf import CSRFProtect
-csrf = CSRFProtect()
 
 # Criação da aplicação Flask
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "Yukimura")
-csrf.init_app(app)
+
+# ---- Proteção CSRF ----
+csrf = CSRFProtect(app)
+
+# (opcional) garantir que csrf_token() esteja disponível em templates
+@app.context_processor
+def inject_csrf_token():
+    from flask_wtf.csrf import generate_csrf
+    return dict(csrf_token=generate_csrf)
 
 # Configuração do middleware para proxy
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -40,7 +47,7 @@ login_manager.login_message_category = 'info'
 # Função para carregar o usuário logado
 @login_manager.user_loader
 def load_user(user_id):
-    return Usuario.query.get(int(user_id))
+    return db.session.get(Usuario, int(user_id))   # forma recomendada pelo SQLAlchemy 2.x
 
 # Registrar blueprints
 app.register_blueprint(main_bp)
@@ -49,18 +56,7 @@ app.register_blueprint(produto_bp)
 app.register_blueprint(chat_bp, url_prefix='/chat')
 app.register_blueprint(perfil_bp)
 
-
-# Criar tabelas do banco de dados
-@login_manager.user_loader
-def load_user(user_id):
-    return db.session.get(Usuario, int(user_id))
-
-@app.context_processor
-def inject_csrf_token():
-    from flask_wtf.csrf import generate_csrf
-    return dict(csrf_token=generate_csrf)
-
-
+# Criar tabelas do banco de dados (somente primeira vez)
 with app.app_context():
     db.create_all()
 

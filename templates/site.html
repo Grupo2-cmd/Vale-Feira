@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
     <title>Bem-vindo</title>
+=======
+    <title>Bem-vindo {{current_user.nome}}</title>
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
 
     <style>
         body {
@@ -11,7 +15,10 @@
             background-color: rgb(20, 99, 95);
             font-family: Arial, Helvetica, sans-serif;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .topo {
             background-color: white;
             height: 80px;
@@ -22,7 +29,10 @@
             padding: 0 20px 0 0;
             box-sizing: border-box;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .login-link {
             background-color: black;
             color: white;
@@ -32,11 +42,17 @@
             font-weight: bold;
             margin-left: 10px;
         }
+<<<<<<< HEAD
 
         .login-link:hover {
             background-color: gray;
         }
 
+=======
+        .login-link:hover {
+            background-color: gray;
+        }
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .centralizar {
             max-width: 800px;
             margin: 40px auto;
@@ -46,21 +62,30 @@
             font-family: 'Times New Roman', Times, serif;
             border-radius: 10px;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .gif {
             width: 100%;
             max-width: 100%;
             height: auto;
             border-radius: 12px;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .produtos {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .produto {
             background-color: white;
             border-radius: 8px;
@@ -70,7 +95,10 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             position: relative;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .btn-excluir {
             background-color: #c00;
             color: white;
@@ -81,7 +109,10 @@
             margin-top: 10px;
             font-weight: bold;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         .btn-excluir:hover {
             background-color: #a00;
         }
@@ -89,6 +120,7 @@
 </head>
 <body>
 
+<<<<<<< HEAD
 <!-- Topo com logo e botão de perfil/login -->
 <div class="topo">
     <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="height: 175px; margin-left: -10px;">
@@ -98,6 +130,21 @@
             <a href="{{ url_for('perfil.perfil') }}" class="login-link">Meu Perfil</a>
         {% else %}
             <a href="{{ url_for('auth.login') }}" class="login-link">Login</a>
+=======
+<!-- Topo com logo e botões de navegação -->
+<div class="topo">
+    <!-- Logo -->
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="height: 175px; margin-left: -10px;">
+
+    <!-- Botões de ação baseados na autenticação do usuário -->
+    <div style="display: flex; align-items: center;">
+        {% if current_user.is_authenticated %}
+            <span style="margin-right: 10px; font-weight: bold;">Olá, {{ current_user.nome }}!</span>
+            <a href="{{ url_for('produto_routes.adicionar_produtos') }}" class="login-link">+ Produto</a>
+            <a href="{{ url_for('auth_routes.logout') }}" class="login-link">Sair</a>
+        {% else %}
+            <a href="{{ url_for('auth_routes.login') }}" class="login-link">Login</a>
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
         {% endif %}
     </div>
 </div>
@@ -112,8 +159,12 @@
             <strong>R$ {{ '%.2f'|format(produto.preco) }}</strong>
 
             {% if current_user.is_authenticated %}
+<<<<<<< HEAD
             <form action="{{ url_for('produto.excluir_produto', id=produto.id) }}" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+=======
+            <form action="{{ url_for('produto_routes.excluir_produto', id=produto.id) }}" method="post">
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
                 <button type="submit" class="btn-excluir">Excluir</button>
             </form>
             {% endif %}

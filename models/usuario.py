@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from database import db
 from flask_login import UserMixin
 from datetime import datetime
@@ -15,3 +16,14 @@ class Usuario(UserMixin, db.Model):
     
     def __repr__(self):
         return f'<Usuario {self.nome}>'
+=======
+from flask_login import UserMixin
+from database import db
+
+class Usuario(UserMixin, db.Model):
+    __tablename__ = 'usuarios'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(30), unique=True)
+    senha = db.Column(db.String())
+>>>>>>> 6d72f570dcc41bfdfae37938747ff76c9e16f441
